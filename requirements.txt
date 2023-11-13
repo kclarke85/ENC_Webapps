@@ -1,1 +1,2 @@
 stripe==7.4.0
+pymongo==4.6.0
