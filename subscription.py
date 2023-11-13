@@ -65,12 +65,17 @@
 #
 # if st.button("Submit"):
 #   st.success("Form submitted!")
-
 import streamlit as st
 import stripe
+from pymongo import MongoClient
 
 # Initialize Stripe with your API key
 stripe.api_key = "your_stripe_api_key_here"
+
+# Connect to MongoDB
+mongo_client = MongoClient("mongodb://localhost:27017")
+db = mongo_client["subscriber"]
+collection = db["subsciver_new"]
 
 # Set the page layout to have a centered title
 st.set_page_config(layout="wide")
@@ -134,30 +139,23 @@ st.markdown(
 st.write("  ")
 col3, col4 = st.columns(2)
 
+# If the Submit button is clicked
 if st.button("Submit"):
-    # You can add payment processing logic here
-    # For example, if using Stripe, you can create a payment intent and display credit card input fields
+    # Save user data to MongoDB
+    user_data = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
+        "phone": phone,
+        "address": address,
+        "postal_code": postal_code,
+        "city": city,
+        "country": country,
+    }
+    result = collection.insert_one(user_data)
+    st.success("User data submitted successfully!")
 
-    # Example: Create a payment intent
-    payment_intent = stripe.PaymentIntent.create(
-        amount=1000,  # Replace with the actual amount in cents
-        currency="usd",
-    )
+    # Additional logic for payment processing (if needed)
 
-    # Display credit card input fields using Stripe Elements
-    st.write("Credit Card Information")
-    card_number = st.text_input("Card Number", type="password")
-    card_expiry = st.text_input("Expiration (MM/YY)")
-    card_cvc = st.text_input("CVC", type="password")
+# ... (existing code)
 
-    # Submit the payment
-    if st.button("Pay"):
-        try:
-            # Use Stripe API to confirm the payment
-            payment_intent.confirm(
-                payment_method="card",
-                payment_method_options={"card": {"number": card_number, "cvc": card_cvc, "exp_month": card_expiry[:2], "exp_year": card_expiry[-2:]}}
-            )
-            st.success("Payment successful!")
-        except stripe.error.CardError as e:
-            st.error(f"Payment failed: {e.error.message}")
