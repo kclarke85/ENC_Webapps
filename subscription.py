@@ -73,8 +73,8 @@ from pymongo import MongoClient
 stripe.api_key = "your_stripe_api_key_here"
 
 # Connect to MongoDB
-mongo_client = MongoClient("mongodb://localhost:27017")
-db = mongo_client["subscriber"]
+mongo_client = mongodb+srv://Subc-36597421.mongo.ondigitalocean.com
+db = mongo_client["webapp_subscriber"]
 collection = db["subsciver"]
 
 # Set the page layout to have a centered title
