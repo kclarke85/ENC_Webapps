@@ -73,7 +73,7 @@ from pymongo import MongoClient
 stripe.api_key = "your_stripe_api_key_here"
 
 # Connect to MongoDB
-mongo_client = mongodb+srv://Subc-36597421.mongo.ondigitalocean.com
+mongo_client = localhost
 db = mongo_client["webapp_subscriber"]
 collection = db["subsciver"]
 
