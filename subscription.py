@@ -74,8 +74,8 @@ stripe.api_key = "your_stripe_api_key_here"
 
 # Connect to MongoDB
 mongo_client = localhost
-db = mongo_client["webapp_subscriber"]
-collection = db["subsciver"]
+db = mongo_client["webapp_subscribe"]
+collection = db["subscriber"]
 
 # Set the page layout to have a centered title
 st.set_page_config(layout="wide")
