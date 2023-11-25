@@ -58,6 +58,24 @@ with col3:
 with col4:
     postal_code = st.text_input("Postal Code")
     country = st.text_input("Country")
+
+# If the Submit button is clicked
+if st.button("Submit"):
+    # Save user data to MongoDB
+    user_data = {
+        "first_name": first_name,
+        "last_name": last_name,
+        "email": email,
+        "phone": phone,
+        "address": address,
+        "postal_code": postal_code,
+        "city": city,
+        "State": State,
+        "country": country,
+    }
+    result = collection.insert_one(user_data)
+    st.success("User data submitted successfully!")
+
 # Add trademark at the bottom
 st.write("©Encounter Engineering, All rights reserved.")
 
