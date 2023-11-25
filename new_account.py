@@ -59,6 +59,20 @@ with col4:
     postal_code = st.text_input("Postal Code")
     country = st.text_input("Country")
 
+# Add custom CSS to change the button color to blue
+st.markdown(
+    """
+    <style>
+    .stButton > button {
+        background-color: #0074E4;
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # If the Submit button is clicked
 if st.button("Submit"):
     # Save user data to MongoDB
