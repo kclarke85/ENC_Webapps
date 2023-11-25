@@ -57,5 +57,6 @@ with col3:
 with col4:
     postal_code = st.text_input("Postal Code")
     country = st.text_input("Country")
-
+# Add trademark at the bottom
+st.write("©Encounter Engineering, All rights reserved.")
 
