@@ -69,6 +69,13 @@ import streamlit as st
 import stripe
 from pymongo import MongoClient
 
+# Assuming you have already set up a MongoDB client and a database
+client = MongoClient('mongodb://localhost:27017/')
+db = client['webapp_subscribe']
+
+# Assuming 'collection_name' is the name of the collection you want to use
+collection = db['subscriber']
+
 # Initialize Stripe with your API key
 stripe.api_key = "your_stripe_api_key_here"
 
