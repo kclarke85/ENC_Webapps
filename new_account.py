@@ -72,6 +72,46 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+# Create the text entry fields for subscription information
+st.write("Subscription Information")
+col1, col2 = st.columns(2)
+
+with col1:
+    first_name = st.text_input("First Name")
+    last_name = st.text_input("Last Name")
+
+with col2:
+    email = st.text_input("Email")
+    phone = st.text_input("Phone")
+
+# Create additional subscription information fields
+col3, col4 = st.columns(2)
+
+with col3:
+    address = st.text_area("Address")
+    postal_code = st.text_input("Postal Code")
+
+with col4:
+    city = st.text_input("City")
+    State = st.text_input("State")
+    country = st.text_input("Country")
+
+# Add custom CSS to change the button color to blue
+st.markdown(
+    """
+    <style>
+    .stButton > button {
+        background-color: #0074E4;
+        color: white;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# Create additional information fields
+st.write("  ")
+col3, col4 = st.columns(2)
 
 # If the Submit button is clicked
 if st.button("Submit"):
@@ -84,11 +124,13 @@ if st.button("Submit"):
         "address": address,
         "postal_code": postal_code,
         "city": city,
-        "state":state,
+        "State": State,
         "country": country,
     }
     result = collection.insert_one(user_data)
     st.success("User data submitted successfully!")
+
+    # Additional logic for payment processing (if needed)
 
 # Add trademark at the bottom
 st.write("©Encounter Engineering, All rights reserved.")
