@@ -28,11 +28,17 @@ st.write("Preorder Information")
 col1, col2 = st.columns(2)
 
 with col1:
+    first_name = st.text_input("First Name")
+    last_name = st.text_input("Last Name")
+    address = st.text_area("Address")
+    city = st.text_input("City")
+    state = st.text_input("State")
+    zip_code = st.text_input("Zip Code")
+    
+with col2:
     product_name = st.text_input("Product Name")
     product_quantity = st.number_input("Quantity", min_value=1, step=1)
-
-with col2:
-    customer_name = st.text_input("Your Name")
+    phone_number = st.text_input("Phone Number")
     email = st.text_input("Email")
 
 # Add custom CSS to change the button color to blue
@@ -52,7 +58,7 @@ st.markdown(
 if st.button("Preorder"):
     # Additional logic for payment processing using Stripe (adjust this part as needed)
     # For demonstration purposes, we're just printing the order details here
-    st.success(f"Preorder submitted successfully!\n\nProduct: {product_name}\nQuantity: {product_quantity}\nCustomer Name: {customer_name}\nEmail: {email}")
+    st.success(f"Preorder submitted successfully!\n\nProduct: {product_name}\nQuantity: {product_quantity}\nLast Name: {last_name}\nFirst Name: {first_name}\nAddress: {address}\nCity: {city}\nState: {state}\nZip Code: {zip_code}\nPhone Number: {phone_number}\nEmail: {email}")
 
 # Add trademark at the bottom
 st.write("©Encounter Engineering, All rights reserved.")
