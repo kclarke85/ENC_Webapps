@@ -73,7 +73,7 @@ st.markdown(
 )
 
 # Create the text entry fields for subscription information
-st.write("Subscription Information")
+st.write("New Account Information")
 col1, col2 = st.columns(2)
 
 with col1:
