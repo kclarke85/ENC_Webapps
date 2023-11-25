@@ -84,7 +84,7 @@ if st.button("Submit"):
         "address": address,
         "postal_code": postal_code,
         "city": city,
-        "State": State,
+        "state":state,
         "country": country,
     }
     result = collection.insert_one(user_data)
