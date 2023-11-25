@@ -53,6 +53,7 @@ col3, col4 = st.columns(2)
 with col3:
     address = st.text_area("Address")
     city = st.text_input("City")
+    eStat = st.text_input("State")
 
 with col4:
     postal_code = st.text_input("Postal Code")
