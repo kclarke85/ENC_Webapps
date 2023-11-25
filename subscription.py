@@ -150,6 +150,7 @@ if st.button("Submit"):
         "address": address,
         "postal_code": postal_code,
         "city": city,
+        "State": State,
         "country": country,
     }
     result = collection.insert_one(user_data)
@@ -157,5 +158,7 @@ if st.button("Submit"):
 
     # Additional logic for payment processing (if needed)
 
-# ... (existing code)
+# Add trademark at the bottom
+st.write("©Encounter Engineering, All rights reserved.")
 
+# ... (existing code)
