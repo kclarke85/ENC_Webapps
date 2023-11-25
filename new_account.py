@@ -1,4 +1,5 @@
 import streamlit as st
+from pymongo import MongoClient
 
 # Set the page layout to have a centered title
 st.set_page_config(layout="wide")
