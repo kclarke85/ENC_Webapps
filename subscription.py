@@ -70,7 +70,7 @@ import stripe
 from pymongo import MongoClient
 
 # Assuming you have already set up a MongoDB client and a database
-client = mongodb+srv://Subc-36597421.mongo.ondigitalocean.com
+connection_string = 'mongodb+srv://Subc-36597421.mongo.ondigitalocean.com'
 db = client['webapp_subscribe']
 
 # Assuming 'collection_name' is the name of the collection you want to use
