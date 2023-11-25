@@ -120,6 +120,7 @@ with col3:
 
 with col4:
     city = st.text_input("City")
+    State = st.text_input("State")
     country = st.text_input("Country")
 
 # Add custom CSS to change the button color to blue
