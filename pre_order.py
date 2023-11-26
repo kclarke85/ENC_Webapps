@@ -39,7 +39,7 @@ st.write(
 )
 
 # Create the text entry fields for preorder information
-st.write("Preorder Information")
+st.write("Pre Order Information")
 col1, col2 = st.columns(2)
 
 with col1:
