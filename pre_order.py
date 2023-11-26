@@ -70,7 +70,7 @@ st.markdown(
 )
 
 # If the Preorder button is clicked
-if st.button("Preorder"):
+if st.button("Submit"):
     # Additional logic for payment processing using Stripe (adjust this part as needed)
     # For demonstration purposes, we're just printing the order details here
     st.success(f"Preorder submitted successfully!\n\nProduct: {product_name}\nQuantity: {product_quantity}\nLast Name: {last_name}\nFirst Name: {first_name}\nAddress: {address}\nCity: {city}\nState: {state}\nZip Code: {zip_code}\nPhone Number: {phone_number}\nEmail: {email}")
