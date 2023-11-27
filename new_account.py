@@ -1,10 +1,12 @@
 import streamlit as st
 import stripe
 from pymongo import MongoClient
+import random
+import string
 
 # Assuming you have already set up a MongoDB client and a database
-#connection_string = 'mongodb+srv://Subc-36597421.mongo.ondigitalocean.com'
-#db = mongo_client["webapp_subscribe"]
+# connection_string = 'mongodb+srv://Subc-36597421.mongo.ondigitalocean.com'
+# db = mongo_client["webapp_subscribe"]
 
 # Replace these with your MongoDB credentials
 MONGO_URI = "mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigitalocean.com/webapp_subscribe?tls=true&authSource=admin&replicaSet=Subc"
@@ -12,17 +14,15 @@ MONGO_URI = "mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigita
 client = MongoClient(MONGO_URI)
 db = client.get_database()
 
-
 # Assuming 'collection_name' is the name of the collection you want to use
 collection = db['new_account']
 
 # Initialize Stripe with your API key
 stripe.api_key = "your_stripe_api_key_here"
 
-# Connect to MongoDB
-# mongo_client = MongoClient('localhost', 27017)
-# db = mongo_client["webapp_subscribe"]
-# collection = db["new_account"]
+# Function to generate a random 8-digit customer number
+def generate_customer_number():
+    return ''.join(random.choices(string.digits, k=8))
 
 # Set the page layout to have a centered title
 st.set_page_config(layout="wide")
@@ -104,10 +104,15 @@ if st.button("Submit"):
     result = collection.insert_one(user_data)
     st.success("User data submitted successfully!")
 
+    # Generate and display 8-digit customer number
+    customer_number = generate_customer_number()
+    st.sidebar.subheader("Customer Number")
+    st.sidebar.write(customer_number, font=("Times New Roman", 12))
+
+    # Save customer number to MongoDB
+    collection.update_one({"_id": result.inserted_id}, {"$set": {"customer_number": customer_number}})
+
     # Additional logic for payment processing (if needed)
 
 # Add trademark at the bottom
 st.write("©Encounter Engineering, All rights reserved.")
-
-# ... (existing code)
-
