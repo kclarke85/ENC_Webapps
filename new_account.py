@@ -48,30 +48,26 @@ st.write(
 
 # Create the text entry fields for subscription information
 st.write("New Account Information")
-col1, col2, col3, col4 = st.columns(4)
+col1, col2 = st.columns(2)
 
 with col1:
     first_name = st.text_input("First Name")
-with col2:
     last_name = st.text_input("Last Name")
-with col3:
+
+with col2:
     email = st.text_input("Email")
-with col4:
     phone = st.text_input("Phone")
 
 # Create additional subscription information fields
-col5, col6, col7, col8 = st.columns(4)
+col3, col4 = st.columns(2)
 
-with col5:
+with col3:
     address = st.text_area("Address")
-with col6:
     postal_code = st.text_input("Postal Code")
-with col7:
-    city = st.text_input("City")
-with col8:
-    State = st.text_input("State")
 
-with col1:
+with col4:
+    city = st.text_input("City")
+    State = st.text_input("State")
     country = st.text_input("Country")
 
 # Add custom CSS to change the button color to blue
@@ -89,7 +85,7 @@ st.markdown(
 
 # Create additional information fields
 st.write("  ")
-col9, col10 = st.columns(2)
+col3, col4 = st.columns(2)
 
 # If the Submit button is clicked
 if st.button("Submit"):
@@ -117,16 +113,6 @@ if st.button("Submit"):
     collection.update_one({"_id": result.inserted_id}, {"$set": {"customer_number": customer_number}})
 
     # Additional logic for payment processing (if needed)
-
-# Clear Form button
-if st.button("Reset"):
-    st.session_state.form_clear = True
-else:
-    st.session_state.form_clear = False
-
-# Clear form and account info if Clear Form button is pressed
-if st.session_state.form_clear:
-    st.experimental_rerun()
 
 # Add trademark at the bottom
 st.write("©Encounter Engineering, All rights reserved.")
