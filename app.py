@@ -5,6 +5,17 @@ import geocoder
 import streamlit as st
 from streamlit import components
 
+from pymongo import MongoClient
+
+# Replace these with your MongoDB credentials
+MONGO_URI = "mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigitalocean.com/webapp_subscribe?tls=true&authSource=admin&replicaSet=Subc"
+
+# Connect to MongoDB
+client = MongoClient(MONGO_URI)
+db = client.get_database()
+collection = db['preorder']
+
+
 # Define the paths to your text files
 file_path1 = "Negative.txt"
 file_path2 = "positive.txt"  # Change this to the path of your positive text file
