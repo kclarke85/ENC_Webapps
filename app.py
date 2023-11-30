@@ -3,8 +3,6 @@ import plotly.express as px
 import pydeck as pdk
 import geocoder
 import streamlit as st
-from streamlit import components
-
 from pymongo import MongoClient
 
 # Replace these with your MongoDB credentials
@@ -14,7 +12,6 @@ MONGO_URI = "mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigita
 client = MongoClient(MONGO_URI)
 db = client.get_database()
 collection = db['preorder']
-
 
 # Define the paths to your text files
 file_path1 = "Negative.txt"
@@ -44,7 +41,7 @@ data = pd.DataFrame({
     'Line Count': [len(content1), len(content2)]
 })
 
-fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Realtime Word Analysis', color='File')
+fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Realtime Word Analysis')
 
 # Get real-time geo-location of the computer
 geo = geocoder.ip('me')
@@ -55,6 +52,16 @@ geo_data = pd.DataFrame({
     'Longitude': [geo.lng],
 })
 
+# Insert geo-location data into MongoDB collection
+collection.insert_one({
+    'latitude': geo.lat,
+    'longitude': geo.lng,
+    'location': {
+        'type': 'Point',
+        'coordinates': [geo.lng, geo.lat]
+    }
+})
+
 # Set the page layout to have a centered title
 st.set_page_config(layout="wide")
 # Embed a logo on the left
@@ -62,7 +69,6 @@ st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/
 
 # Create a layout with three columns: one for the video, one for the chart, and one for the table
 col1, col2, col3 = st.columns([1, 1, 1])
-
 
 # Display the video player in the first column
 with col2:
@@ -98,32 +104,6 @@ with col3:
         ],
     ))
 
-# # Create a container for the table and the paragraph text
-# table_col, paragraph_col = st.columns([1, 1])
-#
-# # Display the combined table with negative and positive data values in the first column
-# with table_col:
-#     st.write('Combined Phrases')
-#     st.dataframe(df)
-#
-# # Use CSS to style and align the attached text to the right of the table in the second column
-# with st.markdown(
-#     """
-#     <div style="text-align: left; padding-left: 10px;">
-#         Oftentimes the intersection of positive words in a conversation can blend with negative words.
-#         Occurring in an argument or confrontation, The Encounter Engineering platform provides a real-time monitor of this type of interaction.
-#         So when your loved one that wears our wearable technology has a negative interaction based on the usage of dangerous keywords,
-#         the loved one is now empowered to advocate in real-time. You should either call the police or call a bondsman.
-#         You may also need to, depending on the interaction, call a lawyer or even the State Department embassy if traveling abroad.
-#         With the awareness of the international and the ability to share with your community, law enforcement, and or legal defense makes this platform very powerful.
-#         Always Aware, Always Safe, Always an advocate.
-#     </div>
-#     """,
-#     unsafe_allow_html=True
-# ):
-#     pass
-import streamlit as st
-
 # Create a container for the table and the paragraph text
 col = st.columns([2, 1])  # Adjust the width ratio as needed
 
@@ -148,5 +128,3 @@ with col[1]:
         """,
         unsafe_allow_html=True
     )
-
-
