@@ -1010,62 +1010,6 @@
 #
 # # Get real-time geo-location of the computer
 # geo = geocoder.ip('me')
-#
-# # Create a GeoMap using Pydeck
-# geo_data = pd.DataFrame({
-#     'Latitude': [geo.lat],
-#     'Longitude': [geo.lng],
-# })
-#
-# # Set the page layout to have a centered title
-# st.set_page_config(layout="wide")
-#
-# # Center the title
-# #st.title("Your Data Visualization")
-# # Embed a logo on the left
-# st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
-#
-# # Create a layout with three columns: one for the video, one for the chart, and one for the table
-# col1, col2, col3 = st.columns([1, 1, 1])
-#
-# # Display the video player in the first column
-# with col2:
-#     st.write('Encounter In Realtime')
-#     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-#     video_bytes = video_file.read()
-#     st.video(video_bytes)
-#
-# # Display the bubble chart in the second column
-# with col1:
-#     st.plotly_chart(fig, use_container_width=True)
-#
-# # Display the GeoMap in the third column
-# with col3:
-#     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-#     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-#     st.pydeck_chart(pdk.Deck(
-#         map_style="mapbox://styles/mapbox/light-v9",
-#         initial_view_state=pdk.ViewState(
-#             latitude=geo.lat,
-#             longitude=geo.lng,
-#             zoom=11,
-#             pitch=50,
-#         ),
-#         layers=[
-#             pdk.Layer(
-#                 "ScatterplotLayer",
-#                 data=geo_data,
-#                 get_position=["Longitude", "Latitude"],
-#                 get_radius=200,
-#                 get_fill_color=[255, 0, 0],  # Red color
-#             ),
-#         ],
-#     ))
-#
-# # Display the combined table with negative and positive data values
-# st.write('Combined Phrases')
-# st.dataframe(df)
-#
 import pandas as pd
 import plotly.express as px
 import pydeck as pdk
