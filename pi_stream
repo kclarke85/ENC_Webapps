@@ -1,35 +1,24 @@
-# Import necessary libraries
-import picamera
-from flask import Flask, render_template, Response
-from threading import Thread
-import time
+import streamlit as st
+import requests
+from PIL import Image
+from io import BytesIO
 
-# Create a Flask app
-app = Flask(__name__)
+# Streamlit app layout
+st.title('Raspberry Pi Video Stream')
 
-# Function to generate video frames
-def generate_frames():
-    with picamera.PiCamera() as camera:
-        # Set the resolution (adjust based on your requirements)
-        camera.resolution = (640, 480)
+# Function to display video stream
+def display_video():
+    video_url = 'http://<raspberry_pi_ip>:5000/video_feed'  # Replace with the Raspberry Pi's IP address
 
-        # Wait for the camera to warm up
-        time.sleep(2)
-
-        # Record video indefinitely
+    with st.spinner('Loading video stream...'):
         while True:
-            video_stream = BytesIO()
-            camera.capture(video_stream, format='jpeg', use_video_port=True)
-            video_stream.seek(0)
-            yield (b'--frame\r\n'
-                   b'Content-Type: image/jpeg\r\n\r\n' + video_stream.read() + b'\r\n\r\n')
-            time.sleep(0.1)  # Adjust the delay as needed
+            response = requests.get(video_url, stream=True)
+            if response.status_code == 200:
+                img = Image.open(BytesIO(response.content))
+                st.image(img, caption='Video Stream', use_column_width=True, channels='BGR')
+            else:
+                st.error(f"Error accessing video stream. Status code: {response.status_code}")
 
-# Flask route for streaming video
-@app.route('/video_feed')
-def video_feed():
-    return Response(generate_frames(), mimetype='multipart/x-mixed-replace; boundary=frame')
-
-# Start Flask app
+# Display video stream in Streamlit app
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000, threaded=True)
+    display_video()
