@@ -1,3 +1,7 @@
+import pandas as pd
+import plotly.express as px
+import pydeck as pdk
+import geocoder
 import streamlit as st
 from pymongo import MongoClient
 
@@ -6,85 +10,39 @@ MONGO_URI = "mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigita
 
 # Connect to MongoDB
 client = MongoClient(MONGO_URI)
-db = client.get_database()
-collection = db['preorder']
+db = client['your_database_name']  # Replace 'your_database_name' with your actual database name
+negative_collection = db['negative_1']
+positive_collection = db['positive_1']
 
-# Set the page layout to have a centered title
-st.set_page_config(layout="wide")
+# Fetch data from MongoDB collections
+negative_data = negative_collection.find({}, {'_id': 0})  # Exclude '_id' field from the result
+positive_data = positive_collection.find({}, {'_id': 0})
 
-# Embed a logo on the left
-st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
+# Convert MongoDB cursor to Pandas DataFrame
+df_negative = pd.DataFrame(list(negative_data))
+df_positive = pd.DataFrame(list(positive_data))
 
-# Create the horizontal banner using HTML and CSS
-st.write(
-    """
-    <style>
-        .banner {
-            background-image: url('https://media.istockphoto.com/id/1160249819/photo/busy-city-intersection-with-technology-theme.jpg?s=612x612&w=0&k=20&c=FxT76zRLGmAmdlJsDqiSKiaGRdarQGt1JuBatq6l7N0=');
-            background-size: cover;
-            height: 100px;
-            width: 100%;
-        }
-    </style>
-    <div class="banner"></div>
-    """,
-    unsafe_allow_html=True
-)
+# Merge data frames on a common key if needed
+# For example, assuming 'common_key' is a common field in both negative and positive data
+# df = pd.merge(df_negative, df_positive, on='common_key', how='outer')
 
-# Create the text entry fields for preorder information
-st.write("Pre Order Information")
-col1, col2 = st.columns(2)
+# Find the maximum number of lines in both DataFrames
+max_lines = max(len(df_negative), len(df_positive))
 
-with col1:
-    first_name = st.text_input("First Name")
-    last_name = st.text_input("Last Name")
-    address = st.text_area("Address")
-    city = st.text_input("City")
-    state = st.text_input("State")
-    zip_code = st.text_input("Zip Code")
-    
-with col2:
-    product_name = st.text_input("Product Name")
-    product_quantity = st.number_input("Quantity", min_value=1, step=1)
-    phone_number = st.text_input("Phone Number")
-    email = st.text_input("Email")
+# Pad the shorter list with empty strings to make them of equal length
+df_negative = df_negative.reindex(range(max_lines)).fillna('')
+df_positive = df_positive.reindex(range(max_lines)).fillna('')
 
-# Add custom CSS to change the button color to blue
-st.markdown(
-    """
-    <style>
-    .stButton > button {
-        background-color: #0074E4;
-        color: white;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
+# Create a DataFrame with two columns: 'Negative' and 'Positive'
+df = pd.DataFrame({
+    'Negative': df_negative['your_negative_field'],  # Replace 'your_negative_field' with the actual field name
+    'Positive': df_positive['your_positive_field']   # Replace 'your_positive_field' with the actual field name
+})
 
-# If the Preorder button is clicked
-if st.button("Submit"):
-    # Get the preorder information
-    preorder_info = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "address": address,
-        "city": city,
-        "state": state,
-        "zip_code": zip_code,
-        "product_name": product_name,
-        "product_quantity": product_quantity,
-        "phone_number": phone_number,
-        "email": email
-    }
+# Create a bubble chart using Plotly with red for negative and green for positive
+data = pd.DataFrame({
+    'File': ['Negative', 'Positive'],
+    'Line Count': [len(df_negative), len(df_positive)]
+})
 
-    # Insert the preorder information into the MongoDB collection
-    collection.insert_one(preorder_info)
-
-    # Additional logic for payment processing using Stripe (if needed)
-
-    # For demonstration purposes, we're just printing the order details here
-    st.success(f"Preorder submitted successfully!\n\nProduct: {product_name}\nQuantity: {product_quantity}\nLast Name: {last_name}\nFirst Name: {first_name}\nAddress: {address}\nCity: {city}\nState: {state}\nZip Code: {zip_code}\nPhone Number: {phone_number}\nEmail: {email}")
-
-# Add trademark at the bottom
-st.write("©Encounter Engineering, All rights reserved.")
+fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title
