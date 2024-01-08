@@ -101,11 +101,21 @@ col = st.columns([2, 1])  # Adjust the width ratio as needed
 with col[0]:
     st.write('Combined Phrases')
     st.dataframe(df, width=810)  # Adjust the width as needed
-
-# Use CSS to style and align the attached text to the right of the table in the second column
+    # Use CSS to style and align the attached text to the right of the table in the second column
 with col[1]:
     st.markdown(
         """
         <div style="text-align: left; padding-left: 10px;">
             Oftentimes the intersection of positive words in a conversation can blend with negative words. 
-            Occurring in an argument or confrontation, The Encounter Engineering platform
+            Occurring in an argument or confrontation, The Encounter Engineering platform provides a real-time monitor of this type of interaction. 
+            So when your loved one that wears our wearable technology has a negative interaction based on the usage of dangerous keywords, 
+            the loved one is now empowered to advocate in real-time. You should either call the police or call a bondsman. 
+            You may also need to, depending on the interaction, call a lawyer or even the State Department embassy if traveling abroad. 
+            With the awareness of the international and the ability to share with your community, law enforcement, and or legal defense makes this platform very powerful. 
+            Always Aware, Always Safe, Always an advocate.
+        </div>
+        """,
+        unsafe_allow_html=True
+    )
+
+
