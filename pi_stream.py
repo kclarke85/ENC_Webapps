@@ -5,8 +5,11 @@ import geocoder
 import streamlit as st
 from pymongo import MongoClient
 
+# Replace these with your MongoDB credentials
+MONGO_URI = "mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigitalocean.com/webapp_subscribe?tls=true&authSource=admin&replicaSet=Subc"
+
 # Connect to MongoDB
-client = MongoClient('mongodb://mongo_username:mongo_password@mongo_host:27017/')
+client = MongoClient(MONGO_URI)
 db = client['your_database_name']  # Replace 'your_database_name' with your actual database name
 negative_collection = db['negative_1']
 positive_collection = db['positive_1']
@@ -117,5 +120,3 @@ with col[1]:
         """,
         unsafe_allow_html=True
     )
-
-
