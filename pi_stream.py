@@ -32,12 +32,9 @@ max_lines = max(len(df_negative), len(df_positive))
 # Pad the shorter list with empty strings to make them of equal length
 df_negative = df_negative.reindex(range(max_lines)).fillna('')
 df_positive = df_positive.reindex(range(max_lines)).fillna('')
-
-# Create a DataFrame with two columns: 'Negative' and 'Positive'
-# Create a DataFrame with two columns: 'Negative' and 'Positive'
 df = pd.DataFrame({
-    'Negative': content1,
-    'Positive': content2
+    'Negative': df_negative['content1'],  # Replace 'your_negative_field' with the actual field name
+    'Positive': df_positive['content2']   # Replace 'your_positive_field' with the actual field name
 })
 
 # Create a bubble chart using Plotly with red for negative and green for positive
