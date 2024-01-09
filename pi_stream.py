@@ -34,9 +34,10 @@ df_negative = df_negative.reindex(range(max_lines)).fillna('')
 df_positive = df_positive.reindex(range(max_lines)).fillna('')
 
 # Create a DataFrame with two columns: 'Negative' and 'Positive'
+# Create a DataFrame with two columns: 'Negative' and 'Positive'
 df = pd.DataFrame({
-    'Negative': df_negative['High Risk'],  # Replace 'your_negative_field' with the actual field name
-    'Positive': df_positive['No Or Low Risk']   # Replace 'your_positive_field' with the actual field name
+    'Negative': content1,
+    'Positive': content2
 })
 
 # Create a bubble chart using Plotly with red for negative and green for positive
