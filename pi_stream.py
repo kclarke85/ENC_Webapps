@@ -11,8 +11,8 @@ MONGO_URI = "mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigita
 # Connect to MongoDB
 client = MongoClient(MONGO_URI)
 db = client['your_database_name']  # Replace 'your_database_name' with your actual database name
-negative_collection = db['negative_1']
-positive_collection = db['positive_1']
+negative_collection = db['spoken_negative_words']
+positive_collection = db['all_words_phrases']
 
 # Fetch data from MongoDB collections
 negative_data = negative_collection.find({}, {'_id': 0})  # Exclude '_id' field from the result
