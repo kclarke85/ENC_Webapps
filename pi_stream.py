@@ -10,3 +10,26 @@ client = MongoClient("mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo
 db = client["webapp_subscribe"]
 negative_collection = db['spoken_negative_words']
 positive_collection = db['all_words_phrases']
+
+# Set the page layout to have a centered title
+st.set_page_config(layout="wide")
+
+# Embed a logo on the left
+st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
+
+# Fetch data from MongoDB collection
+data = list(collection.find())
+
+# Separate the data into two columns (assuming your data has 'positive' and 'negative' fields)
+positive_Collection= [entry['positive'] for entry in data]
+negative_collection = [entry['negative'] for entry in data]
+
+# Create a Plotly table
+fig = go.Figure(data=[go.Table(
+    header=dict(values=['Positive Column', 'Negative Column']),
+    cells=dict(values=[positive_data, negative_data]))
+])
+
+# Display the table using Streamlit and Plotly
+st.plotly_chart(fig)
+
