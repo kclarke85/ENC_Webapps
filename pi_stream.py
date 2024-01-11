@@ -5,7 +5,7 @@ from pymongo import MongoClient
 
 # Connect to MongoDB
 client = MongoClient("mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigitalocean.com/webapp_subscribe?tls=true&authSource=admin&replicaSet=Subc")
-db = client["webapp_subscribe]
+db = client["webapp_subscribe"]
 negative_collection = db['spoken_negative_words']
 positive_collection = db['all_words_phrases']
 
