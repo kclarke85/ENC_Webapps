@@ -13,7 +13,7 @@ positive_data = pd.DataFrame(list(positive_collection.find()))
 negative_data = pd.DataFrame(list(negative_collection.find()))
 
 # Assuming 'all_words_phrases' and 'positive_data' are actual column names in your positive_data DataFrame
-fig = px.scatter(positive_data, x='all_words_phrases', y='positive_data', size='your_size_column',
+fig = px.scatter(positive_data, x='all_words_phrases', y='negative_data', size='word_size',
                  color='color_column', hover_data=['additional_columns'])
 st.plotly_chart(fig)
 
