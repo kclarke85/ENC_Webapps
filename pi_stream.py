@@ -15,7 +15,7 @@ positive_data = pd.DataFrame(list(positive_collection.find()))
 negative_data = pd.DataFrame(list(negative_collection.find()))
 
 # Create a Plotly Bubble Chart for positive and negative data
-fig = px.scatter(positive_data, x='your_x_column', y='your_y_column', size='your_size_column',
+fig = px.scatter(positive_data, x='all_words_phrases', y='Positive', size='your_size_column',
                  color='your_color_column', hover_data=['additional_columns'])
 st.plotly_chart(fig)
 
@@ -24,7 +24,7 @@ st.write("Positive Words:")
 st.table(positive_data[['word_column_1', 'word_column_2']])
 
 st.write("Negative Words:")
-st.table(negative_data[['word_column_1', 'word_column_2']])
+st.table(negative_data[['spoken_negative_words', 'Negative']])
 
 # Embed video from Dropbox
 st.write("Embedded Video from Dropbox:")
