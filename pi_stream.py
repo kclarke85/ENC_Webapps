@@ -8,8 +8,6 @@ client = MongoClient("mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo
 db = client["webapp_subscribe"]
 positive_collection = db["positive_collection"]
 negative_collection = db["negative_collection"]
-
-
 # Load positive and negative data from MongoDB collections
 positive_data = pd.DataFrame(list(positive_collection.find()))
 negative_data = pd.DataFrame(list(negative_collection.find()))
