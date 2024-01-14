@@ -1,14 +1,28 @@
 import streamlit as st
-import requests
+import stripe
+from pymongo import MongoClient
 
-# Set the page layout to have a centered title
-st.set_page_config(layout="wide")
+# Assuming you have already set up a MongoDB client and a database
+#connection_string = 'mongodb+srv://Subc-36597421.mongo.ondigitalocean.com'
+#db = mongo_client["webapp_subscribe"]
 
-# Dropbox access token
-DROPBOX_ACCESS_TOKEN = 'sl.BtomJzI-qj3UJftIPlfQM46rRSPgGmgFQuGmXarIvKa8bcyu5edklJjNlw4itAGsf9_LfS2Paua_Nw07cYfN01bGSVNJj6SptoSpwEpt-aBwtIMeHttQXCH8pNSA91UyiOGjocrxgAk_e5a0_opmp9Y'
+# Replace these with your MongoDB credentials
+MONGO_URI = "mongodb+srv://doadmin:NX09a6Z7m28K3d1E@Subc-36597421.mongo.ondigitalocean.com/webapp_subscribe?tls=true&authSource=admin&replicaSet=Subc"
+# Connect to MongoDB
+client = MongoClient(MONGO_URI)
+db = client.get_database()
 
-# Dropbox video path
-DROPBOX_VIDEO_PATH = '/remote/mete-data/out.mp4'
+
+# Assuming 'collection_name' is the name of the collection you want to use
+collection = db['subscriber']
+
+# Initialize Stripe with your API key
+stripe.api_key = "your_stripe_api_key_here"
+
+# Connect to MongoDB
+# mongo_client = MongoClient('localhost', 27017)
+# db = mongo_client["webapp_subscribe"]
+# collection = db["subscriber"]
 
 # Set the page layout to have a centered title
 st.set_page_config(layout="wide")
