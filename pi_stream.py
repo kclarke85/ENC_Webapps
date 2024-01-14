@@ -28,5 +28,3 @@ try:
 except Exception as e:
     print(f"Error: {e}")
     
-# JavaScript code to refresh the browser every minute
-st.markdown('<script>setInterval(function(){ location.reload(); }, 60000);</script>', unsafe_allow_html=True)
