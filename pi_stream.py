@@ -1,5 +1,6 @@
 import streamlit as st
 import requests
+import tempfile
 
 # Set the page layout to have a centered title
 st.set_page_config(layout="wide")
@@ -19,8 +20,13 @@ response = requests.post(
     }
 )
 
+# Save video content to a temporary file
+with tempfile.NamedTemporaryFile(delete=False) as temp_file:
+    temp_file.write(response.content)
+    video_path = temp_file.name
+
 # Embed a logo on the left
 st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
 
 # Display the recorded video from Dropbox in Streamlit with reduced width
-st.video(response.content, width=480)
+st.video(video_path, width=480)
