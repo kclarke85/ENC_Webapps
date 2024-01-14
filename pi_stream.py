@@ -19,7 +19,7 @@ positive_collection = db['all_words_phrases']
 DROPBOX_ACCESS_TOKEN = 'your_dropbox_access_token'
 
 # Dropbox video path
-DROPBOX_VIDEO_PATH = '/remote/out.mp4'
+DROPBOX_VIDEO_PATH = '/remote/meta-data/out.mp4'
 
 # Fetch video from Dropbox
 response = requests.post(
