@@ -59,11 +59,10 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# Create additional information fields
-st.write("  ")
-col3, col4 = st.columns(2)
+
+    # Additional logic for payment processing (if needed)
 
 # Add trademark at the bottom
 st.write("©Encounter Engineering, All rights reserved.")
-# Add trademark at the bottom
-st.write("©Encounter Engineering, All rights reserved.")
+
+# ... (existing code)
