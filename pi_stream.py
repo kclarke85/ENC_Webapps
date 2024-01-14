@@ -19,9 +19,6 @@ positive_collection = db['all_words_phrases']
 # Embed a logo on the left
 st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
 
-# Set the page layout to have a centered title
-st.set_page_config(layout="wide")
-
 # Embed a logo on the left
 st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
 
