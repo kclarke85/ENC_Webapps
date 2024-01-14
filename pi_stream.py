@@ -16,15 +16,12 @@ st.set_page_config(layout="wide")
 
 # Embed a logo on the left
 st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
-st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
 
-# Code B
-st.video(video_stream)
+        # Code A
+        st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
 
-try:
-    # Your exception handling code
-    pass
+        # Code B
+        st.video(video_stream)
 
-except Exception as e:
-    print(f"Error: {e}")
-    
+    except Exception as e:
+        print(f"Error: {e}")
