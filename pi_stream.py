@@ -1,6 +1,5 @@
 import streamlit as st
 import requests
-from io import BytesIO
 
 # Set the page layout to have a centered title
 st.set_page_config(layout="wide")
@@ -21,4 +20,4 @@ response = requests.post(
 )
 
 # Display the recorded video from Dropbox in Streamlit with reduced width
-st.video(BytesIO(response.content), width=480)
+st.video(response.content, width=480)
