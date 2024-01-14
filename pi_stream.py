@@ -9,15 +9,3 @@ DROPBOX_ACCESS_TOKEN = 'sl.BtomJzI-qj3UJftIPlfQM46rRSPgGmgFQuGmXarIvKa8bcyu5edkl
 
 # Dropbox video path
 DROPBOX_VIDEO_PATH = '/remote/mete-data/out.mp4'
-
-# Fetch video from Dropbox
-response = requests.post(
-    'https://content.dropboxapi.com/2/files/download',
-    headers={
-        'Authorization': f'Bearer {DROPBOX_ACCESS_TOKEN}',
-        'Dropbox-API-Arg': '{"path": "' + DROPBOX_VIDEO_PATH + '"}',
-    }
-)
-
-# Display the recorded video from Dropbox in Streamlit with reduced width
-st.video(response.content, width=480)
