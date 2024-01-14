@@ -22,5 +22,5 @@ response = requests.post(
 # Embed a logo on the left
 st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
 
-# Display the recorded video from Dropbox in Streamlit
-st.video(response.content)
+# Display the recorded video from Dropbox in Streamlit with reduced width
+st.video(response.content, width=480)
