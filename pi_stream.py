@@ -45,24 +45,3 @@ st.write(
     """,
     unsafe_allow_html=True
 )
-
-# Add custom CSS to change the button color to blue
-st.markdown(
-    """
-    <style>
-    .stButton > button {
-        background-color: #0074E4;
-        color: white;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True
-)
-
-
-    # Additional logic for payment processing (if needed)
-
-# Add trademark at the bottom
-st.write("©Encounter Engineering, All rights reserved.")
-
-# ... (existing code)
