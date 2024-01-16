@@ -44,7 +44,6 @@ st.write(
     """,
     unsafe_allow_html=True
 )
-
 # Markdown for the HTML content
 html_content = """
 <!DOCTYPE html>
@@ -55,10 +54,12 @@ html_content = """
     <title>Embedded File</title>
 </head>
 <body>
-    <iframe src="192.168.1.69/output.mp4" width="100%" height="600px"></iframe>
+    <iframe src="http://192.168.1.69/output.mp4" width="100%" height="600px"></iframe>
 </body>
 </html>
 """
 
 # Display HTML content using markdown
 st.markdown(html_content, unsafe_allow_html=True)
+
+
