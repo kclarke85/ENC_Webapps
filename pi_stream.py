@@ -53,7 +53,7 @@ st.write(
     <title>Embedded File</title>
 </head>
 <body>
-    <iframe src="http://RASPBERRY_PI_IP/FILENAME" width="100%" height="600px"></iframe>
+    <iframe src="192.168.1.69/output.mp4" width="100%" height="600px"></iframe>
 </body>
 </html>
 
