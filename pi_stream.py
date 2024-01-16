@@ -45,3 +45,15 @@ st.write(
     """,
     unsafe_allow_html=True
 )
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Embedded File</title>
+</head>
+<body>
+    <iframe src="http://RASPBERRY_PI_IP/FILENAME" width="100%" height="600px"></iframe>
+</body>
+</html>
+
