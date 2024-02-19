@@ -1,1153 +1,235 @@
-# # # # # import pandas as pd
-# # # # # import plotly.express as px
-# # # # # import pydeck as pdk
-# # # # # import geocoder
-# # # # # import streamlit as st
-# # # # #
-# # # # # # Define the paths to your text files
-# # # # # file_path1 = "Negative.txt"
-# # # # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # # # #
-# # # # # # Read the content of the text files and split into lines
-# # # # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # # # #     content1 = file1.readlines()
-# # # # #     content2 = file2.readlines()
-# # # # #
-# # # # # # Calculate the line counts
-# # # # # line_count1 = len(content1)
-# # # # # line_count2 = len(content2)
-# # # # #
-# # # # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # # # data = pd.DataFrame({
-# # # # #     'File': ['Negative', 'Positive'],
-# # # # #     'Line Count': [line_count1, line_count2]
-# # # # # })
-# # # # #
-# # # # # fig = px.bar(data, x='File', y='Line Count', title='Line Count Comparison', color='File')
-# # # # #
-# # # # # # Get real-time geo-location of the computer
-# # # # # geo = geocoder.ip('me')
-# # # # #
-# # # # # # Create a GeoMap using Pydeck
-# # # # # geo_data = pd.DataFrame({
-# # # # #     'Latitude': [geo.lat],
-# # # # #     'Longitude': [geo.lng],
-# # # # # })
-# # # # #
-# # # # # # Create two columns with equal size
-# # # # # col1, col2 = st.columns(2)
-# # # # #
-# # # # # # Set the width of the columns to be the same
-# # # # # col1.width = col2.width
-# # # # #
-# # # # # # Display the bubble chart in the first column
-# # # # # with col1:
-# # # # #     st.plotly_chart(fig, use_container_width=True)
-# # # # #
-# # # # # # Display the GeoMap in the second column
-# # # # # with col2:
-# # # # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # # # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # # # #     st.pydeck_chart(pdk.Deck(
-# # # # #         map_style="mapbox://styles/mapbox/light-v9",
-# # # # #         initial_view_state=pdk.ViewState(
-# # # # #             latitude=geo.lat,
-# # # # #             longitude=geo.lng,
-# # # # #             zoom=11,
-# # # # #             pitch=50,
-# # # # #         ),
-# # # # #         layers=[
-# # # # #             pdk.Layer(
-# # # # #                 "ScatterplotLayer",
-# # # # #                 data=geo_data,
-# # # # #                 get_position=["Longitude", "Latitude"],
-# # # # #                 get_radius=200,
-# # # # #                 get_fill_color=[255, 0, 0],  # Red color
-# # # # #             ),
-# # # # #         ],
-# # # # #     ))
-# # # # #
-# # # # # # Create two columns for positive and negative phrases
-# # # # # col3, col4 = st.columns(2)
-# # # # #
-# # # # # # Display positive phrases in the left column
-# # # # # with col3:
-# # # # #     st.subheader("Positive Phrases")
-# # # # #     for line in content2:
-# # # # #         st.write(line)
-# # # # #
-# # # # # # Display negative phrases in the right column
-# # # # # with col4:
-# # # # #     st.subheader("Negative Phrases")
-# # # # #     for line in content1:
-# # # # #         st.write(line)
-# # # # # import pandas as pd
-# # # # # import plotly.express as px
-# # # # # import pydeck as pdk
-# # # # # import geocoder
-# # # # # import streamlit as st
-# # # # #
-# # # # # # Define the paths to your text files
-# # # # # file_path1 = "Negative.txt"
-# # # # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # # # #
-# # # # # # Read the content of the text files and split into lines
-# # # # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # # # #     content1 = file1.readlines()
-# # # # #     content2 = file2.readlines()
-# # # # #
-# # # # # # Calculate the line counts
-# # # # # line_count1 = len(content1)
-# # # # # line_count2 = len(content2)
-# # # # #
-# # # # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # # # data = pd.DataFrame({
-# # # # #     'File': ['Negative', 'Positive'],
-# # # # #     'Line Count': [line_count1, line_count2]
-# # # # # })
-# # # # #
-# # # # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # # # #
-# # # # # # Get real-time geo-location of the computer
-# # # # # geo = geocoder.ip('me')
-# # # # #
-# # # # # # Create a GeoMap using Pydeck
-# # # # # geo_data = pd.DataFrame({
-# # # # #     'Latitude': [geo.lat],
-# # # # #     'Longitude': [geo.lng],
-# # # # # })
-# # # # #
-# # # # # # Create two columns with equal size
-# # # # # col1, col2 = st.columns(2)
-# # # # #
-# # # # # # Set the width of the columns to be the same
-# # # # # col1.width = col2.width
-# # # # #
-# # # # # # Display the bubble chart in the first column
-# # # # # with col1:
-# # # # #     st.plotly_chart(fig, use_container_width=True)
-# # # # #
-# # # # # # Display the GeoMap in the second column
-# # # # # with col2:
-# # # # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # # # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # # # #     st.pydeck_chart(pdk.Deck(
-# # # # #         map_style="mapbox://styles/mapbox/light-v9",
-# # # # #         initial_view_state=pdk.ViewState(
-# # # # #             latitude=geo.lat,
-# # # # #             longitude=geo.lng,
-# # # # #             zoom=11,
-# # # # #             pitch=50,
-# # # # #         ),
-# # # # #         layers=[
-# # # # #             pdk.Layer(
-# # # # #                 "ScatterplotLayer",
-# # # # #                 data=geo_data,
-# # # # #                 get_position=["Longitude", "Latitude"],
-# # # # #                 get_radius=200,
-# # # # #                 get_fill_color=[255, 0, 0],  # Red color
-# # # # #             ),
-# # # # #         ],
-# # # # #     ))
-# # # # #
-# # # # # # Create two columns for positive and negative phrases
-# # # # # col3, col4 = st.columns(2)
-# # # # #
-# # # # # # Display positive phrases in the left column
-# # # # # with col3:
-# # # # #     st.subheader("Positive Phrases")
-# # # # #     st.write(content2)
-# # # # #
-# # # # # # Display negative phrases in the right column
-# # # # # with col4:
-# # # # #     st.subheader("Negative Phrases")
-# # # # #     st.write(content1)
-# # # # # 10/11/2023 Gold
-# # # # import pandas as pd
-# # # # import plotly.express as px
-# # # # import pydeck as pdk
-# # # # import geocoder
-# # # # import streamlit as st
-# # # #
-# # # # # Define the paths to your text files
-# # # # file_path1 = "Negative.txt"
-# # # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # # #
-# # # # # Read the content of the text files and split into lines
-# # # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # # #     content1 = file1.readlines()
-# # # #     content2 = file2.readlines()
-# # # #
-# # # # # Calculate the line counts
-# # # # line_count1 = len(content1)
-# # # # line_count2 = len(content2)
-# # # #
-# # # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # # data = pd.DataFrame({
-# # # #     'File': ['Negative', 'Positive'],
-# # # #     'Line Count': [line_count1, line_count2]
-# # # # })
-# # # #
-# # # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # # #
-# # # # # Get real-time geo-location of the computer
-# # # # geo = geocoder.ip('me')
-# # # #
-# # # # # Create a GeoMap using Pydeck
-# # # # geo_data = pd.DataFrame({
-# # # #     'Latitude': [geo.lat],
-# # # #     'Longitude': [geo.lng],
-# # # # })
-# # # #
-# # # # # Create a layout with four columns: one for the video, one for the chart, and two for the table.
-# # # # col1, col2, col3, col4 = st.columns([2, 2, 4, 4])
-# # # #
-# # # # # Display the video player in the first column
-# # # # with col1:
-# # # #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# # # #     video_bytes = video_file.read()
-# # # #     st.video(video_bytes)
-# # # #
-# # # # # Create two columns with equal size
-# # # # col1, col2 = st.columns(2)
-# # # #
-# # # # # Set the width of the columns to be the same
-# # # # col1.width = col2.width
-# # # #
-# # # # # Display the bubble chart in the first column
-# # # # with col1:
-# # # #     st.plotly_chart(fig, use_container_width=True)
-# # # #
-# # # # # Display the GeoMap in the second column
-# # # # with col2:
-# # # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # # #     st.pydeck_chart(pdk.Deck(
-# # # #         map_style="mapbox://styles/mapbox/light-v9",
-# # # #         initial_view_state=pdk.ViewState(
-# # # #             latitude=geo.lat,
-# # # #             longitude=geo.lng,
-# # # #             zoom=11,
-# # # #             pitch=50,
-# # # #         ),
-# # # #         layers=[
-# # # #             pdk.Layer(
-# # # #                 "ScatterplotLayer",
-# # # #                 data=geo_data,
-# # # #                 get_position=["Longitude", "Latitude"],
-# # # #                 get_radius=200,
-# # # #                 get_fill_color=[255, 0, 0],  # Red color
-# # # #             ),
-# # # #         ],
-# # # #     ))
-# # # #
-# # # # # Create two columns for positive and negative phrases
-# # # # col3, col4 = st.columns(2)
-# # # #
-# # # # # Display positive phrases in the left column
-# # # # with col3:
-# # # #     st.subheader("Positive Phrases")
-# # # #     positive_phrases = [line.strip() for line in content2]
-# # # #     st.dataframe(pd.DataFrame(positive_phrases, columns=["Positive Phrases"]), height=500)
-# # # #
-# # # # # Display negative phrases in the right column
-# # # # with col4:
-# # # #     st.subheader("Negative Phrases")
-# # # #     negative_phrases = [line.strip() for line in content1]
-# # # #     st.dataframe(pd.DataFrame(negative_phrases, columns=["Negative Phrases"]), height=500)
-# # # #
-# # # # #10/12 withh video close to what I want
-# # # #
-# # # import pandas as pd
-# # # import plotly.express as px
-# # # import pydeck as pdk
-# # # import geocoder
-# # # import streamlit as st
-# # #
-# # # # Define the paths to your text files
-# # # file_path1 = "Negative.txt"
-# # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # #
-# # # # Read the content of the text files and split into lines
-# # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # #     content1 = file1.readlines()
-# # #     content2 = file2.readlines()
-# # #
-# # # # Calculate the line counts
-# # # line_count1 = len(content1)
-# # # line_count2 = len(content2)
-# # #
-# # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # data = pd.DataFrame({
-# # #     'File': ['Negative', 'Positive'],
-# # #     'Line Count': [line_count1, line_count2]
-# # # })
-# # #
-# # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # #
-# # # # Get real-time geo-location of the computer
-# # # geo = geocoder.ip('me')
-# # #
-# # # # Create a GeoMap using Pydeck
-# # # geo_data = pd.DataFrame({
-# # #     'Latitude': [geo.lat],
-# # #     'Longitude': [geo.lng],
-# # # })
-# # #
-# # # # Create a layout with two columns for the video and charts
-# # # col1, col2 = st.columns(2)
-# # #
-# # # # Display the video player in the first column
-# # # with col1:
-# # #     st.write('Video Player')
-# # #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# # #     video_bytes = video_file.read()
-# # #     st.video(video_bytes)
-# # #
-# # # # Display the bubble chart in the second column
-# # # with col2:
-# # #     st.plotly_chart(fig, use_container_width=True)
-# # #
-# # # # Display the GeoMap
-# # # st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # # st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # # st.pydeck_chart(pdk.Deck(
-# # #     map_style="mapbox://styles/mapbox/light-v9",
-# # #     initial_view_state=pdk.ViewState(
-# # #         latitude=geo.lat,
-# # #         longitude=geo.lng,
-# # #         zoom=11,
-# # #         pitch=50,
-# # #     ),
-# # #     layers=[
-# # #         pdk.Layer(
-# # #             "ScatterplotLayer",
-# # #             data=geo_data,
-# # #             get_position=["Longitude", "Latitude"],
-# # #             get_radius=200,
-# # #             get_fill_color=[255, 0, 0],  # Red color
-# # #         ),
-# # #     ],
-# # # ))
-# # #
-# # # # Display positive and negative phrases
-# # # st.write('Positive Phrases')
-# # # positive_phrases = [line.strip() for line in content2]
-# # # st.dataframe(pd.DataFrame(positive_phrases, columns=["Positive Phrases"]), height=500)
-# # #
-# # # st.write('Negative Phrases')
-# # # negative_phrases = [line.strip() for line in content1]
-# # # st.dataframe(pd.DataFrame(negative_phrases, columns=["Negative Phrases"]), height=500)
-# # # import pandas as pd
-# # # import plotly.express as px
-# # # import pydeck as pdk
-# # # import geocoder
-# # # import streamlit as st
-# # #
-# # # # Define the paths to your text files
-# # # file_path1 = "Negative.txt"
-# # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # #
-# # # # Read the content of the text files and split into lines
-# # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # #     content1 = file1.readlines()
-# # #     content2 = file2.readlines()
-# # #
-# # # # Calculate the line counts
-# # # line_count1 = len(content1)
-# # # line_count2 = len(content2)
-# # #
-# # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # data = pd.DataFrame({
-# # #     'File': ['Negative', 'Positive'],
-# # #     'Line Count': [line_count1, line_count2]
-# # # })
-# # #
-# # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # #
-# # # # Get real-time geo-location of the computer
-# # # geo = geocoder.ip('me')
-# # #
-# # # # Create a GeoMap using Pydeck
-# # # geo_data = pd.DataFrame({
-# # #     'Latitude': [geo.lat],
-# # #     'Longitude': [geo.lng],
-# # # })
-# # #
-# # # # Create a layout with three columns: one for the video, one for the chart, and one for the GeoMap and phrases
-# # # col1, col2, col3 = st.columns([2, 2, 4])
-# # #
-# # # # Display the video player in the first column
-# # # with col1:
-# # #     st.write('Video Player')
-# # #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# # #     video_bytes = video_file.read()
-# # #     st.video(video_bytes)
-# # #
-# # # # Display the bubble chart in the second column
-# # # with col2:
-# # #     st.plotly_chart(fig, use_container_width=True)
-# # #
-# # # # Display the GeoMap and phrases in the third column
-# # # with col3:
-# # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # #     st.pydeck_chart(pdk.Deck(
-# # #         map_style="mapbox://styles/mapbox/light-v9",
-# # #         initial_view_state=pdk.ViewState(
-# # #             latitude=geo.lat,
-# # #             longitude=geo.lng,
-# # #             zoom=11,
-# # #             pitch=50,
-# # #         ),
-# # #         layers=[
-# # #             pdk.Layer(
-# # #                 "ScatterplotLayer",
-# # #                 data=geo_data,
-# # #                 get_position=["Longitude", "Latitude"],
-# # #                 get_radius=200,
-# # #                 get_fill_color=[255, 0, 0],  # Red color
-# # #             ),
-# # #         ],
-# # #     ))
-# # #
-# # # # Display positive and negative phrases
-# # # st.write('Positive Phrases')
-# # # positive_phrases = [line.strip() for line in content2]
-# # # st.dataframe(pd.DataFrame(positive_phrases, columns=["Positive Phrases"]), height=500)
-# # #
-# # # st.write('Negative Phrases')
-# # # negative_phrases = [line.strip() for line in content1]
-# # # st.dataframe(pd.DataFrame(negative_phrases, columns=["Negative Phrases"]), height=500)
-# #
-# #
-# # # import pandas as pd
-# # # import plotly.express as px
-# # # import pydeck as pdk
-# # # import geocoder
-# # # import streamlit as st
-# # #
-# # # # Define the paths to your text files
-# # # file_path1 = "Negative.txt"
-# # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # #
-# # # # Read the content of the text files and split into lines
-# # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # #     content1 = file1.readlines()
-# # #     content2 = file2.readlines()
-# # #
-# # # # Calculate the line counts
-# # # line_count1 = len(content1)
-# # # line_count2 = len(content2)
-# # #
-# # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # data = pd.DataFrame({
-# # #     'File': ['Negative', 'Positive'],
-# # #     'Line Count': [line_count1, line_count2]
-# # # })
-# # #
-# # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # #
-# # # # Get real-time geo-location of the computer
-# # # geo = geocoder.ip('me')
-# # #
-# # # # Create a GeoMap using Pydeck
-# # # geo_data = pd.DataFrame({
-# # #     'Latitude': [geo.lat],
-# # #     'Longitude': [geo.lng],
-# # # })
-# # #
-# # # # Set the page layout to have a centered title and move the MP4 player to the top center of the page
-# # # st.set_page_config(layout="wide")
-# # #
-# # # # Center the title
-# # # st.title("Your Data Visualization")
-# # #
-# # # # Create a layout with three columns: one for the video, one for the chart, and one for the GeoMap and phrases
-# # # col1, col2, col3 = st.columns([1, 1, 1])
-# # #
-# # # # Display the video player at the top center
-# # # with col2:
-# # #     st.write('Video Player')
-# # #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# # #     video_bytes = video_file.read()
-# # #     st.video(video_bytes)
-# # #
-# # # # Display the bubble chart in the second column
-# # # with col1:
-# # #     st.plotly_chart(fig, use_container_width=True)
-# # #
-# # # # Display the GeoMap and phrases in the third column
-# # # with col3:
-# # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # #     st.pydeck_chart(pdk.Deck(
-# # #         map_style="mapbox://styles/mapbox/light-v9",
-# # #         initial_view_state=pdk.ViewState(
-# # #             latitude=geo.lat,
-# # #             longitude=geo.lng,
-# # #             zoom=11,
-# # #             pitch=50,
-# # #         ),
-# # #         layers=[
-# # #             pdk.Layer(
-# # #                 "ScatterplotLayer",
-# # #                 data=geo_data,
-# # #                 get_position=["Longitude", "Latitude"],
-# # #                 get_radius=200,
-# # #                 get_fill_color=[255, 0, 0],  # Red color
-# # #             ),
-# # #         ],
-# # #     ))
-# # #
-# # # # Display positive and negative phrases
-# # # st.write('Positive Phrases')
-# # # positive_phrases = [line.strip() for line in content2]
-# # # st.dataframe(pd.DataFrame(positive_phrases, columns=["Positive Phrases"]), height=500)
-# # #
-# # # st.write('Negative Phrases')
-# # # negative_phrases = [line.strip() for line in content1]
-# # # st.dataframe(pd.DataFrame(negative_phrases, columns=["Negative Phrases"]), height=500)
-# #
-# # # import pandas as pd
-# # # import plotly.express as px
-# # # import pydeck as pdk
-# # # import geocoder
-# # # import streamlit as st
-# # #
-# # # # Define the paths to your text files
-# # # file_path1 = "Negative.txt"
-# # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # #
-# # # # Read the content of the text files and split into lines
-# # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # #     content1 = file1.readlines()
-# # #     content2 = file2.readlines()
-# # #
-# # # # Calculate the line counts
-# # # line_count1 = len(content1)
-# # # line_count2 = len(content2)
-# # #
-# # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # data = pd.DataFrame({
-# # #     'File': ['Negative', 'Positive'],
-# # #     'Line Count': [line_count1, line_count2]
-# # # })
-# # #
-# # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # #
-# # # # Get real-time geo-location of the computer
-# # # geo = geocoder.ip('me')
-# # #
-# # # # Create a GeoMap using Pydeck
-# # # geo_data = pd.DataFrame({
-# # #     'Latitude': [geo.lat],
-# # #     'Longitude': [geo.lng],
-# # # })
-# # #
-# # # # Set the page layout to have a centered title
-# # # st.set_page_config(layout="wide")
-# # #
-# # # # Center the title
-# # # st.title("Your Data Visualization")
-# # #
-# # # # Create a layout with three columns: one for the video, one for the chart, and one for the phrases
-# # # col1, col2, col3 = st.columns([1, 1, 1])
-# # #
-# # # # Display the video player in the first column and adjust its size to match the geolocation chart
-# # # with col2:
-# # #     st.write('Video Player')
-# # #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# # #     video_bytes = video_file.read()
-# # #     st.video(video_bytes, width=geo_data.shape[1], height=geo_data.shape[0])
-# # #
-# # # # Display the bubble chart in the second column
-# # # with col1:
-# # #     st.plotly_chart(fig, use_container_width=True)
-# # #
-# # # # Display the GeoMap in the third column
-# # # with col3:
-# # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # #     st.pydeck_chart(pdk.Deck(
-# # #         map_style="mapbox://styles/mapbox/light-v9",
-# # #         initial_view_state=pdk.ViewState(
-# # #             latitude=geo.lat,
-# # #             longitude=geo.lng,
-# # #             zoom=11,
-# # #             pitch=50,
-# # #         ),
-# # #         layers=[
-# # #             pdk.Layer(
-# # #                 "ScatterplotLayer",
-# # #                 data=geo_data,
-# # #                 get_position=["Longitude", "Latitude"],
-# # #                 get_radius=200,
-# # #                 get_fill_color=[255, 0, 0],  # Red color
-# # #             ),
-# # #         ],
-# # #     ))
-# # #
-# # # # Display positive and negative phrases
-# # # st.write('Positive Phrases')
-# # # positive_phrases = [line.strip() for line in content2]
-# # # st.dataframe(pd.DataFrame(positive_phrases, columns=["Positive Phrases"]), height=500)
-# # #
-# # # st.write('Negative Phrases')
-# # # negative_phrases = [line.strip() for line in content1]
-# # # st.dataframe(pd.DataFrame(negative_phrases, columns=["Negative Phrases"]), height=500)
-# # #
-# # # import pandas as pd
-# # # import plotly.express as px
-# # # import pydeck as pdk
-# # # import geocoder
-# # # import streamlit as st
-# # #
-# # # # Define the paths to your text files
-# # # file_path1 = "Negative.txt"
-# # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # #
-# # # # Read the content of the text files and split into lines
-# # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # #     content1 = file1.readlines()
-# # #     content2 = file2.readlines()
-# # #
-# # # # Calculate the line counts
-# # # line_count1 = len(content1)
-# # # line_count2 = len(content2)
-# # #
-# # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # data = pd.DataFrame({
-# # #     'File': ['Negative', 'Positive'],
-# # #     'Line Count': [line_count1, line_count2]
-# # # })
-# # #
-# # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # #
-# # # # Get real-time geo-location of the computer
-# # # geo = geocoder.ip('me')
-# # #
-# # # # Create a GeoMap using Pydeck
-# # # geo_data = pd.DataFrame({
-# # #     'Latitude': [geo.lat],
-# # #     'Longitude': [geo.lng],
-# # # })
-# # #
-# # # # Set the page layout to have a centered title
-# # # st.set_page_config(layout="wide")
-# # #
-# # # # Center the title
-# # # st.title("Your Data Visualization")
-# # #
-# # # # Create a layout with three columns: one for the video, one for the chart, and one for the phrases
-# # # col1, col2, col3 = st.columns([1, 1, 1])
-# # #
-# # # # Display the video player in the first column and adjust its size to match the geolocation chart
-# # # with col2:
-# # #     st.write('Video Player')
-# # #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# # #     video_bytes = video_file.read()
-# # #     st.video(video_bytes, width=geo_data.shape[1], height=geo_data.shape[0])
-# # #
-# # # # Display the bubble chart in the second column
-# # # with col1:
-# # #     st.plotly_chart(fig, use_container_width=True)
-# # #
-# # # # Display the GeoMap in the third column
-# # # with col3:
-# # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # #     st.pydeck_chart(pdk.Deck(
-# # #         map_style="mapbox://styles/mapbox/light-v9",
-# # #         initial_view_state=pdk.ViewState(
-# # #             latitude=geo.lat,
-# # #             longitude=geo.lng,
-# # #             zoom=11,
-# # #             pitch=50,
-# # #         ),
-# # #         layers=[
-# # #             pdk.Layer(
-# # #                 "ScatterplotLayer",
-# # #                 data=geo_data,
-# # #                 get_position=["Longitude", "Latitude"],
-# # #                 get_radius=200,
-# # #                 get_fill_color=[255, 0, 0],  # Red color
-# # #             ),
-# # #         ],
-# # #     ))
-# # #
-# # # # Create a new layout for the tables below the existing content
-# # # col4, col5 = st.columns(2)
-# # #
-# # # # Display positive and negative phrases side by side in the lower center of the page
-# # # with col4:
-# # #     st.write('Positive Phrases')
-# # #     positive_phrases = [line.strip() for line in content2]
-# # #     st.dataframe(pd.DataFrame(positive_phrases, columns=["Positive Phrases"]), height=500)
-# # #
-# # # with col5:
-# # #     st.write('Negative Phrases')
-# # #     negative_phrases = [line.strip for line in content1]
-# # #     st.dataframe(pd.DataFrame(negative_phrases, columns=["Negative Phrases"]), height=500)
-# # #
-# # # import pandas as pd
-# # # import plotly.express as px
-# # # import pydeck as pdk
-# # # import geocoder
-# # # import streamlit as st
-# # #
-# # # # Define the paths to your text files
-# # # file_path1 = "Negative.txt"
-# # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # #
-# # # # Read the content of the text files and split into lines
-# # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # #     content1 = file1.readlines()
-# # #     content2 = file2.readlines()
-# # #
-# # # # Calculate the line counts
-# # # line_count1 = len(content1)
-# # # line_count2 = len(content2)
-# # #
-# # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # data = pd.DataFrame({
-# # #     'File': ['Negative', 'Positive'],
-# # #     'Line Count': [line_count1, line_count2]
-# # # })
-# # #
-# # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # #
-# # # # Get real-time geo-location of the computer
-# # # geo = geocoder.ip('me')
-# # #
-# # # # Create a GeoMap using Pydeck
-# # # geo_data = pd.DataFrame({
-# # #     'Latitude': [geo.lat],
-# # #     'Longitude': [geo.lng],
-# # # })
-# # #
-# # # # Set the page layout to have a centered title
-# # # st.set_page_config(layout="wide")
-# # #
-# # # # Center the title
-# # # st.title("Your Data Visualization")
-# # #
-# # # # Create a layout with three columns: one for the video, one for the chart, and one for the phrases
-# # # col1, col2, col3 = st.columns([1, 1, 1])
-# # #
-# # # # Display the video player in the first column
-# # # with col2:
-# # #     st.write('Video Player')
-# # #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# # #     video_bytes = video_file.read()
-# # #     st.video(video_bytes)
-# # #
-# # #     # Apply CSS to adjust the size of the video player
-# # #     st.markdown(
-# # #         f'<style>video {{ width: {geo_data.shape[1]}px; height: {geo_data.shape[0]}px; }}</style>',
-# # #         unsafe_allow_html=True
-# # #     )
-# # #
-# # # # Display the bubble chart in the second column
-# # # with col1:
-# # #     st.plotly_chart(fig, use_container_width=True)
-# # #
-# # # # Display the GeoMap in the third column
-# # # with col3:
-# # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # #     st.pydeck_chart(pdk.Deck(
-# # #         map_style="mapbox://styles/mapbox/light-v9",
-# # #         initial_view_state=pdk.ViewState(
-# # #             latitude=geo.lat,
-# # #             longitude=geo.lng,
-# # #             zoom=11,
-# # #             pitch=50,
-# # #         ),
-# # #         layers=[
-# # #             pdk.Layer(
-# # #                 "ScatterplotLayer",
-# # #                 data=geo_data,
-# # #                 get_position=["Longitude", "Latitude"],
-# # #                 get_radius=200,
-# # #                 get_fill_color=[255, 0, 0],  # Red color
-# # #             ),
-# # #         ],
-# # #     ))
-# # #
-# # # # Create a new layout for the tables below the existing content
-# # # col4, col5 = st.columns(2)
-# # #
-# # # # Display positive and negative phrases side by side in the lower center of the page
-# # # with col4:
-# # #     st.write('Positive Phrases')
-# # #     positive_phrases = [line.strip() for line in content2]
-# # #     st.dataframe(pd.DataFrame(positive_phrases, columns=["Positive Phrases"]), height=500)
-# # #
-# # # with col5:
-# # #     st.write('Negative Phrases')
-# # #     negative_phrases = [line.strip for line in content1]
-# # #     st.dataframe(pd.DataFrame(negative_phrases, columns=["Negative Phrases"]), height=500)
-# #
-# # #
-# # # import pandas as pd
-# # # import plotly.express as px
-# # # import pydeck as pdk
-# # # import geocoder
-# # # import streamlit as st
-# # #
-# # # # Define the paths to your text files
-# # # file_path1 = "Negative.txt"
-# # # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# # #
-# # # # Read the content of the text files and split into lines
-# # # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# # #     content1 = file1.readlines()
-# # #     content2 = file2.readlines()
-# # #
-# # # # Calculate the line counts
-# # # line_count1 = len(content1)
-# # # line_count2 = len(content2)
-# # #
-# # # # Create a bubble chart using Plotly with red for negative and green for positive
-# # # data = pd.DataFrame({
-# # #     'File': ['Negative', 'Positive'],
-# # #     'Line Count': [line_count1, line_count2]
-# # # })
-# # #
-# # # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# # #
-# # # # Get real-time geo-location of the computer
-# # # geo = geocoder.ip('me')
-# # #
-# # # # Create a GeoMap using Pydeck
-# # # geo_data = pd.DataFrame({
-# # #     'Latitude': [geo.lat],
-# # #     'Longitude': [geo.lng],
-# # # })
-# # #
-# # # # Set the page layout to have a centered title
-# # # st.set_page_config(layout="wide")
-# # #
-# # # # Center the title
-# # # st.title("Your Data Visualization")
-# # #
-# # # # Create a layout with three columns: one for the video, one for the chart, and one for the phrases
-# # # col1, col2, col3 = st.columns([1, 1, 1])
-# # #
-# # # # Display the video player in the first column
-# # # with col2:
-# # #     st.write('Video Player')
-# # #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# # #     video_bytes = video_file.read()
-# # #     st.video(video_bytes)
-# # #
-# # # # Display the bubble chart in the second column
-# # # with col1:
-# # #     st.plotly_chart(fig, use_container_width=True)
-# # #
-# # # # Display the GeoMap in the third column
-# # # with col3:
-# # #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# # #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# # #     st.pydeck_chart(pdk.Deck(
-# # #         map_style="mapbox://styles/mapbox/light-v9",
-# # #         initial_view_state=pdk.ViewState(
-# # #             latitude=geo.lat,
-# # #             longitude=geo.lng,
-# # #             zoom=11,
-# # #             pitch=50,
-# # #         ),
-# # #         layers=[
-# # #             pdk.Layer(
-# # #                 "ScatterplotLayer",
-# # #                 data=geo_data,
-# # #                 get_position=["Longitude", "Latitude"],
-# # #                 get_radius=200,
-# # #                 get_fill_color=[255, 0, 0],  # Red color
-# # #             ),
-# # #         ],
-# # #     ))
-# # #
-# # # # Create a new layout for the tables below the existing content
-# # # col4, col5 = st.columns(2)
-# # #
-# # # # Display positive and negative phrases side by side in the center of the page
-# # # with col4:
-# # #     st.write('Positive Phrases')
-# # #     positive_phrases = [line.strip() for line in content2]
-# # #     st.dataframe(pd.DataFrame(positive_phrases, columns=["Positive Phrases"]))
-# # #
-# # # with col5:
-# # #     st.write('Negative Phrases')
-# # #     negative_phrases = [line.strip() for line in content1]
-# # #     st.dataframe(pd.DataFrame(negative_phrases, columns=["Negative Phrases"]))
-# # #
-# #
-# # import pandas as pd
-# # import plotly.express as px
-# # import pydeck as pdk
-# # import geocoder
-# # import streamlit as st
-# #
-# # # Define the paths to your text files
-# # file_path1 = "Negative.txt"
-# # file_path2 = "positive.csv"  # Change this to the path of your positive text file
-# #
-# # # Read the content of the text files and split into lines
-# # with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-# #     content1 = file1.readlines()
-# #     content2 = file2.readlines()
-# #
-# # # Calculate the line counts
-# # line_count1 = len(content1)
-# # line_count2 = len(content2)
-# #
-# # # Create a bubble chart using Plotly with red for negative and green for positive
-# # data = pd.DataFrame({
-# #     'File': ['Negative', 'Positive'],
-# #     'Line Count': [line_count1, line_count2]
-# # })
-# #
-# # fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Line Count Comparison', color='File')
-# #
-# # # Get real-time geo-location of the computer
-# # geo = geocoder.ip('me')
-# #
-# # # Create a GeoMap using Pydeck
-# # geo_data = pd.DataFrame({
-# #     'Latitude': [geo.lat],
-# #     'Longitude': [geo.lng],
-# # })
-# #
-# # # Set the page layout to have a centered title
-# # st.set_page_config(layout="wide")
-# #
-# # # Center the title
-# # st.title("Your Data Visualization")
-# #
-# # # Create a layout with three columns: one for the video, one for the chart, and one for the phrases
-# # col1, col2, col3 = st.columns([1, 1, 1])
-# #
-# # # Display the video player in the first column
-# # with col2:
-# #     st.write('Video Player')
-# #     video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-# #     video_bytes = video_file.read()
-# #     st.video(video_bytes)
-# #
-# # # Display the bubble chart in the second column
-# # with col1:
-# #     st.plotly_chart(fig, use_container_width=True)
-# #
-# # # Display the GeoMap in the third column
-# # with col3:
-# #     st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-# #     st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-# #     st.pydeck_chart(pdk.Deck(
-# #         map_style="mapbox://styles/mapbox/light-v9",
-# #         initial_view_state=pdk.ViewState(
-# #             latitude=geo.lat,
-# #             longitude=geo.lng,
-# #             zoom=11,
-# #             pitch=50,
-# #         ),
-# #         layers=[
-# #             pdk.Layer(
-# #                 "ScatterplotLayer",
-# #                 data=geo_data,
-# #                 get_position=["Longitude", "Latitude"],
-# #                 get_radius=200,
-# #                 get_fill_color=[255, 0, 0],  # Red color
-# #             ),
-# #         ],
-# #     ))
-# #
-# # # Create a new layout for the tables below the existing content
-# # col4 = st.columns(1)
-# #
-# # # Display combined positive and negative phrases in a single table
-# # with col4:
-# #     st.write('Combined Phrases')
-# #     combined_phrases = [line.strip() for line in content2] + [line.strip() for line in content1]
-# #     st.dataframe(pd.DataFrame(combined_phrases, columns=["Combined Phrases"]))
-# # WORKING CODE 10/13
-# import pandas as pd
-# import plotly.express as px
-# import pydeck as pdk
-# import geocoder
 # import streamlit as st
+# import pandas as pd
+# import requests
+# import plotly.express as px
+# import geocoder
+# from gtts import gTTS
+# import io
+# import pydeck as pdk
 #
-# # Define the paths to your text files
-# file_path1 = "Negative.txt"
-# file_path2 = "positive.csv"  # Change this to the path of your positive text file
+# # Function to read JSON data from the server and calculate sum
+# def read_json_and_sum(endpoint):
+#     url = f"http://192.168.1.69:5000/api/{endpoint}"
+#     try:
+#         response = requests.get(url)
+#         response.raise_for_status()  # Raise an exception for bad status codes
+#         data = response.json()
 #
-# # Read the content of the text files and split into lines
-# with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-#     content1 = file1.readlines()
-#     content2 = file2.readlines()
+#         # Get total lines from JSON data
+#         total_lines = len(data)
+#         return total_lines
+#     except requests.exceptions.HTTPError as http_err:
+#         st.error(f"HTTP error occurred: {http_err}")
+#     except Exception as err:
+#         st.error(f"Error occurred: {err}")
+#     return None
 #
-# # Find the maximum number of lines in both files
-# max_lines = max(len(content1), len(content2))
+# # Function to generate speech
+# def generate_speech():
+#     message = "Hello, You received this link because a loved one is in a potentially dangerous situation. Perhaps a negative traffic stop, walking alone at night or anxious about a ride share. If the video shows a harmful situation, call 911 immediately. Or use the help links. If everything is ok give your loved one a call to follow up. We hope everything is ok. Let's keep our loved ones safe."
+#     tts = gTTS(text=message, lang='en')
+#     audio_fp = io.BytesIO()
+#     tts.write_to_fp(audio_fp)
+#     audio_fp.seek(0)
+#     return audio_fp
 #
-# # Pad the shorter list with empty strings to make them of equal length
-# content1.extend([''] * (max_lines - len(content1)))
-# content2.extend([''] * (max_lines - len(content2)))
-#
-# # Create a DataFrame with two columns: 'Negative' and 'Positive'
-# df = pd.DataFrame({
-#     'Negative': content1,
-#     'Positive': content2
-# })
-#
-# # Create a bubble chart using Plotly with red for negative and green for positive
-# data = pd.DataFrame({
-#     'File': ['Negative', 'Positive'],
-#     'Line Count': [len(content1), len(content2)]
-# })
-#
-# fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Realtime Word Analysis', color='File')
+# # # Display the sidebar with icon
+# st.sidebar.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=True)
+# st.sidebar.write("Here are some actions you can take:")
+# st.sidebar.write("- Call Law Enforcement")
+# st.sidebar.write("- Call Bail Bondsman")
+# st.sidebar.write("- Share Video via Social Media")
+# st.sidebar.write("- Ayuda En Español")
+# st.sidebar.write("- Call Legal Aid")
 #
 # # Get real-time geo-location of the computer
 # geo = geocoder.ip('me')
-import pandas as pd
-import plotly.express as px
-import pydeck as pdk
-import geocoder
+#
+# # Display the video
+# #st.title("Encounter Video")
+# flask_video_url = "http://192.168.1.69:5000/video"  # Replace with actual video URL
+# st.video(flask_video_url)
+#
+# # Button to explain
+# # Button to explain
+# button_html = """
+#     <style>
+#         .stButton>button {
+#             background-color: #ADD8E6; /* Light Blue */
+#         }
+#     </style>
+# """
+# st.markdown(button_html, unsafe_allow_html=True)
+#
+# if st.button("Explain", key="explanation_button"):
+#     with st.spinner("Generating Explanation..."):
+#         audio_file = generate_speech()
+#     st.audio(audio_file, format='audio/mp3', start_time=0)
+#     st.success("Explanation Generated")
+#
+# # Get total lines from all_words_phrases.json and matched_neg_words.json
+# total_lines_all_words = read_json_and_sum("all_words_phrases")
+# total_lines_matched_neg = read_json_and_sum("matched_neg_words")
+#
+# # Create DataFrame for the bubble chart
+# data = pd.DataFrame({
+#     'File': ['all_words_phrases.json', 'matched_neg_words.json'],
+#     'Total Lines': [total_lines_all_words, total_lines_matched_neg],
+#     'Color': ['green', 'red']  # Assigning colors for bubble chart
+# })
+#
+# # Plotly bubble chart
+# fig = px.scatter(data, x='File', y='Total Lines', size='Total Lines', color='File',
+#                  hover_name='File', size_max=50,
+#                  color_discrete_map={"all_words_phrases.json": "green", "matched_neg_words.json": "red"})
+#
+# fig.update_layout(title="Safety Risk Analysis")  # Leave font size adjustment out here
+#
+# # Display the chart
+# st.plotly_chart(fig)
+#
+# # Geolocation map
+# st.markdown("<h1 style='font-size: larger;'>Subscriber Location</h1>", unsafe_allow_html=True)
+# #st.markdown("<h1 style='font-size: smaller;'>Subscriber Location</h1>", unsafe_allow_html=True)
+# #st.title("<span style='font-size: smaller;'>Subscriber Location</span>", unsafe_allow_html=True)
+#
+# layer = pdk.Layer(
+#     'ScatterplotLayer',
+#     data=pd.DataFrame({'Latitude': [geo.lat], 'Longitude': [geo.lng]}),
+#     get_position='[Longitude, Latitude]',
+#     get_radius=20000,
+#     get_fill_color=[0, 255, 255],
+#     pickable=True,
+#     opacity=0.8,
+# )
+#
+# map = pdk.Deck(
+#     layers=[layer],
+#     initial_view_state=pdk.ViewState(latitude=geo.lat, longitude=geo.lng, zoom=10),
+# )
+#
+# st.pydeck_chart(map)
 import streamlit as st
-from streamlit import components
+import pandas as pd
+import requests
+import plotly.express as px
+import geocoder
+from gtts import gTTS
+import io
+import pydeck as pdk
+import subprocess
 
-# Define the paths to your text files
-file_path1 = "Negative.txt"
-file_path2 = "positive.txt"  # Change this to the path of your positive text file
+# Function to read JSON data from the server and calculate sum
+def read_json_and_sum(endpoint):
+    url = f"http://192.168.1.69:5000/api/{endpoint}"
+    try:
+        response = requests.get(url)
+        response.raise_for_status()  # Raise an exception for bad status codes
+        data = response.json()
 
-# Read the content of the text files and split into lines
-with open(file_path1, "r") as file1, open(file_path2, "r") as file2:
-    content1 = file1.readlines()
-    content2 = file2.readlines()
+        # Get total lines from JSON data
+        total_lines = len(data)
+        return total_lines
+    except requests.exceptions.HTTPError as http_err:
+        st.error(f"HTTP error occurred: {http_err}")
+    except Exception as err:
+        st.error(f"Error occurred: {err}")
+    return None
 
-# Find the maximum number of lines in both files
-max_lines = max(len(content1), len(content2))
+# Function to generate speech
+def generate_speech():
+    message = "Hello, You received this link because a loved one is in a potentially dangerous situation. Perhaps a negative traffic stop, walking alone at night or anxious about a ride share. If the video shows a harmful situation, call 911 immediately. Or use the help links. If everything is ok give your loved one a call to follow up. We hope everything is ok. Let's keep our loved ones safe."
+    tts = gTTS(text=message, lang='en')
+    audio_fp = io.BytesIO()
+    tts.write_to_fp(audio_fp)
+    audio_fp.seek(0)
+    return audio_fp
 
-# Pad the shorter list with empty strings to make them of equal length
-content1.extend([''] * (max_lines - len(content1)))
-content2.extend([''] * (max_lines - len(content2)))
+# # Sidebar with actions
+# st.sidebar.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=True)
+# st.sidebar.write("Here are some actions you can take:")
+# st.sidebar.write("- Call Law Enforcement")
+# st.sidebar.write("- Call Bail Bondsman")
+# st.sidebar.write("- Share Video via Social Media")
+# st.sidebar.write("- Ayuda En Español")
+# st.sidebar.write("- Call Legal Aid")
 
-# Create a DataFrame with two columns: 'Negative' and 'Positive'
-df = pd.DataFrame({
-    'Negative': content1,
-    'Positive': content2
-})
+# Function to run subprocess based on the label clicked
+def run_streamlit_app(app_name):
+    subprocess.Popen(["streamlit", "run", app_name])
 
-# Create a bubble chart using Plotly with red for negative and green for positive
-data = pd.DataFrame({
-    'File': ['Negative', 'Positive'],
-    'Line Count': [len(content1), len(content2)]
-})
+# Function to run subprocess based on the label clicked
+def run_streamlit_app(app_name):
+    subprocess.Popen(["streamlit", "run", app_name])
 
-fig = px.scatter(data, x='File', y='Line Count', size='Line Count', title='Realtime Word Analysis', color='File')
+# Sidebar with actions
+st.sidebar.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=True)
+st.sidebar.write("Here are some actions you can take:")
+
+# Create text hyperlinks and call run_streamlit_app function on click
+if st.sidebar.markdown("[Call Law Enforcement](http://localhost:8501/)"):
+    run_streamlit_app("Phone_law_enf.py")
+if st.sidebar.markdown("[Call Bail Bondsman](http://localhost:8502/)"):
+    run_streamlit_app("program2.py")  # Change program2.py to the actual file name
+if st.sidebar.markdown("[Share Video via Social Media](http://localhost:8503/)"):
+    run_streamlit_app("program3.py")  # Change program3.py to the actual file name
+if st.sidebar.markdown("[Ayuda En Español](http://localhost:8504/)"):
+    run_streamlit_app("program4.py")  # Change program4.py to the actual file name
+if st.sidebar.markdown("[Call Legal Aid](http://localhost:8505/)"):
+    run_streamlit_app("program5.py")  # Change program5.py to the actual file name
+
+
 
 # Get real-time geo-location of the computer
 geo = geocoder.ip('me')
 
-# Create a GeoMap using Pydeck
-geo_data = pd.DataFrame({
-    'Latitude': [geo.lat],
-    'Longitude': [geo.lng],
+# Display the video
+st.video("http://192.168.1.69:5000/video")  # No height adjustment
+
+# Button to explain
+if st.button("Explain", key="explanation_button"):
+    with st.spinner("Generating Explanation..."):
+        audio_file = generate_speech()
+    st.audio(audio_file, format='audio/mp3', start_time=0)
+    st.success("Explanation Generated")
+
+# Get total lines from all_words_phrases.json and matched_neg_words.json
+total_lines_all_words = read_json_and_sum("all_words_phrases")
+total_lines_matched_neg = read_json_and_sum("matched_neg_words")
+
+# Create DataFrame for the bubble chart
+data = pd.DataFrame({
+    'File': ['all_words_phrases.json', 'matched_neg_words.json'],
+    'Total Lines': [total_lines_all_words, total_lines_matched_neg],
+    'Color': ['green', 'red']  # Assigning colors for bubble chart
 })
 
-# Set the page layout to have a centered title
-st.set_page_config(layout="wide")
-# Embed a logo on the left
-st.image('https://img1.wsimg.com/isteam/ip/e66af92a-07a8-4ac6-8d3f-a41caa301a88/blob-65affbe.png/:/rs=w:184,h:158,cg:true,m/cr=w:184,h:158/qt=q:95', use_column_width=100)
+# Plotly bubble chart
+fig = px.scatter(data, x='File', y='Total Lines', size='Total Lines', color='File',
+                 hover_name='File', size_max=50,
+                 color_discrete_map={"all_words_phrases.json": "green", "matched_neg_words.json": "red"})
 
-# Create a layout with three columns: one for the video, one for the chart, and one for the table
-col1, col2, col3 = st.columns([1, 1, 1])
+fig.update_layout(title="Safety Risk Analysis")  # Leave font size adjustment out here
 
+# Display the chart
+st.plotly_chart(fig, use_container_width=True)  # Adjust for responsiveness
 
-# Display the video player in the first column
-with col2:
-    st.write('Encounter In Realtime')
-    video_file = open('C:/Users/kclar/PycharmProjects/VOZ_trigger/static/video.mp4', 'rb')
-    video_bytes = video_file.read()
-    st.video(video_bytes)
+# Geolocation map
+st.markdown("<h1 style='font-size: larger;'>Subscriber Location</h1>", unsafe_allow_html=True)
 
-# Display the bubble chart in the second column
-with col1:
-    st.plotly_chart(fig, use_container_width=True)
+layer = pdk.Layer(
+    'ScatterplotLayer',
+    data=pd.DataFrame({'Latitude': [geo.lat], 'Longitude': [geo.lng]}),
+    get_position='[Longitude, Latitude]',
+    get_radius=20000,
+    get_fill_color=[0, 255, 255],
+    pickable=True,
+    opacity=0.8,
+)
 
-# Display the GeoMap in the third column
-with col3:
-    st.write(f"Location: {geo.city}, {geo.state}, {geo.country}")
-    st.write(f"Latitude: {geo.lat}, Longitude: {geo.lng}")
-    st.pydeck_chart(pdk.Deck(
-        map_style="mapbox://styles/mapbox/light-v9",
-        initial_view_state=pdk.ViewState(
-            latitude=geo.lat,
-            longitude=geo.lng,
-            zoom=11,
-            pitch=50,
-        ),
-        layers=[
-            pdk.Layer(
-                "ScatterplotLayer",
-                data=geo_data,
-                get_position=["Longitude", "Latitude"],
-                get_radius=200,
-                get_fill_color=[255, 0, 0],  # Red color
-            ),
-        ],
-    ))
+map = pdk.Deck(
+    layers=[layer],
+    initial_view_state=pdk.ViewState(latitude=geo.lat, longitude=geo.lng, zoom=10),
+)
 
-# # Create a container for the table and the paragraph text
-# table_col, paragraph_col = st.columns([1, 1])
-#
-# # Display the combined table with negative and positive data values in the first column
-# with table_col:
-#     st.write('Combined Phrases')
-#     st.dataframe(df)
-#
-# # Use CSS to style and align the attached text to the right of the table in the second column
-# with st.markdown(
-#     """
-#     <div style="text-align: left; padding-left: 10px;">
-#         Oftentimes the intersection of positive words in a conversation can blend with negative words.
-#         Occurring in an argument or confrontation, The Encounter Engineering platform provides a real-time monitor of this type of interaction.
-#         So when your loved one that wears our wearable technology has a negative interaction based on the usage of dangerous keywords,
-#         the loved one is now empowered to advocate in real-time. You should either call the police or call a bondsman.
-#         You may also need to, depending on the interaction, call a lawyer or even the State Department embassy if traveling abroad.
-#         With the awareness of the international and the ability to share with your community, law enforcement, and or legal defense makes this platform very powerful.
-#         Always Aware, Always Safe, Always an advocate.
-#     </div>
-#     """,
-#     unsafe_allow_html=True
-# ):
-#     pass
-import streamlit as st
-
-# Create a container for the table and the paragraph text
-col = st.columns([2, 1])  # Adjust the width ratio as needed
-
-# Display the combined table with negative and positive data values in the first column
-with col[0]:
-    st.write('Combined Phrases')
-    st.dataframe(df, width=810)  # Adjust the width as needed
-
-# Use CSS to style and align the attached text to the right of the table in the second column
-with col[1]:
-    st.markdown(
-        """
-        <div style="text-align: left; padding-left: 10px;">
-            Oftentimes the intersection of positive words in a conversation can blend with negative words. 
-            Occurring in an argument or confrontation, The Encounter Engineering platform provides a real-time monitor of this type of interaction. 
-            So when your loved one that wears our wearable technology has a negative interaction based on the usage of dangerous keywords, 
-            the loved one is now empowered to advocate in real-time. You should either call the police or call a bondsman. 
-            You may also need to, depending on the interaction, call a lawyer or even the State Department embassy if traveling abroad. 
-            With the awareness of the international and the ability to share with your community, law enforcement, and or legal defense makes this platform very powerful. 
-            Always Aware, Always Safe, Always an advocate.
-        </div>
-        """,
-        unsafe_allow_html=True
-    )
-
-
+st.pydeck_chart(map, use_container_width=True)  # Adjust for responsiveness
